@@ -548,7 +548,6 @@
             z-index: 1;
         }
 
-        /* [PC 영상 문제 해결] 래퍼의 레이어 순서를 콘텐츠 뒤로 보냅니다 */
         .hero-video-wrapper {
             position: absolute;
             top: 0; left: 0;
@@ -592,7 +591,7 @@
         #hero .hero-content {
             position: relative;
             text-align: center;
-            z-index: 2; /* 콘텐츠는 항상 비디오보다 위에 있도록 설정 */
+            z-index: 2;
         }
 
         #hero .hero-content h2,
@@ -1650,7 +1649,6 @@
                 display: block;
             }
 
-            /* [모바일 수정] 히어로 섹션 재구성 */
             #hero {
                 height: auto;
                 min-height: auto;
@@ -1707,7 +1705,6 @@
                 color: var(--light-color);
             }
             
-            /* [모바일 수정] 프로그램 섹션 슬라이더로 변경 */
             .program-preview-grid {
                 display: flex;
                 overflow-x: auto;
@@ -1734,10 +1731,24 @@
             .page-main-title { font-size: 2.8rem; }
             .section-heading { font-size: 2rem; }
             .story-intro .section-heading { font-size: 2.1rem; }
-            .footer-main { grid-template-columns: 1fr; gap: 3rem; margin-bottom: 50px; }
-            .footer-links { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-            .footer-social { text-align: left; margin-top: 1rem; }
-            .footer-social a:first-child { margin-left: 0; }
+            
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                text-align: center;
+            }
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+                text-align: left;
+            }
+            .footer-social {
+                text-align: center;
+                margin-top: 0;
+            }
+            .footer-social a {
+                margin: 0 1rem;
+            }
+
             .event-grid { grid-template-columns: 1fr; }
             .price-table>div { grid-template-columns: 2fr 1fr 1fr; }
             .price-table>div span:nth-child(2) { display: none; }
@@ -1815,7 +1826,6 @@
                 <section class="content-section" style="padding-top: 180px;">
                     <!-- 
                     [수정] leaf-decor.png 파일이 없어 콘솔 에러가 발생하므로 주석 처리합니다.
-                          images/leaf-decor.png 파일이 준비되면 주석을 해제하여 사용하세요.
                     <img src="images/leaf-decor.png" alt="decorative leaf" class="decorative-element leaf-1">
                     -->
                     <div class="container split-layout-overlapped">
@@ -1869,7 +1879,6 @@
                     <div class="container-narrow text-center">
                         <!--
                         [수정] leaf-decor.png 파일이 없어 콘솔 에러가 발생하므로 주석 처리합니다.
-                              images/leaf-decor.png 파일이 준비되면 주석을 해제하여 사용하세요.
                         <img src="images/leaf-decor.png" alt="decorative leaf" class="decorative-element leaf-2">
                         -->
                         <h3 class="section-eyebrow fade-up">Testimonial</h3>
@@ -2514,9 +2523,7 @@
 
                 const mainVideo = pageElement.querySelector('#hero-video');
                 if (mainVideo) {
-                    mainVideo.play().catch(e => {
-                        // 자동재생 실패는 흔한 경우이므로 콘솔 에러는 숨깁니다.
-                    });
+                    mainVideo.play().catch(e => {});
                 }
 
                 const header = document.getElementById('header');
@@ -2737,13 +2744,24 @@
             const heroVideo = document.getElementById('hero-video');
 
             if (fullscreenBtn && heroVideo) {
-                fullscreenBtn.addEventListener('click', () => {
+                fullscreenBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // 버튼 클릭이 비디오 클릭으로 전파되지 않도록 함
                     if (heroVideo.requestFullscreen) {
                         heroVideo.requestFullscreen();
                     } else if (heroVideo.webkitRequestFullscreen) { /* Safari */
                         heroVideo.webkitRequestFullscreen();
                     } else if (heroVideo.msRequestFullscreen) { /* IE11 */
                         heroVideo.msRequestFullscreen();
+                    }
+                });
+                
+                heroVideo.addEventListener('click', () => {
+                    if (document.fullscreenElement || document.webkitFullscreenElement) {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) { /* Safari */
+                            document.webkitExitFullscreen();
+                        }
                     }
                 });
             }
