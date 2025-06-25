@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* Aesthetique - V9.1 (버그 수정 및 안정화 버전) */
+        /* Aesthetique - V9.2 (Hero Content 복구) */
         :root {
             --primary-color: #B59A7F;
             --secondary-accent-color: #4a5d50;
@@ -53,7 +53,6 @@
             word-break: keep-all;
         }
 
-        /* ▼▼▼ [수정] 이미지 파일이 없을 경우를 대비해 주석 처리합니다. 이미지가 있다면 주석을 해제하세요. ▼▼▼ */
         /*
         body::before {
             content: '';
@@ -185,7 +184,6 @@
             margin: 4rem auto;
         }
 
-        /* ▼▼▼ [수정] 이미지 파일이 없을 경우를 대비해 주석 처리합니다. 이미지가 있다면 주석을 해제하세요. ▼▼▼ */
         /*
         .decorative-element {
             position: absolute;
@@ -501,6 +499,42 @@
             color: var(--light-color);
         }
 
+        /* ▼▼▼ [수정] 텍스트 가독성을 위해 어두운 오버레이 스타일을 다시 추가합니다. ▼▼▼ */
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, .4), rgba(0, 0, 0, .1) 50%, transparent);
+            z-index: 1;
+        }
+
+        /* ▼▼▼ [수정] .hero-content 스타일 복구 및 추가 ▼▼▼ */
+        #hero .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 2;
+        }
+
+        #hero .hero-content h2,
+        #hero .hero-content p {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+        }
+
+        #hero .hero-content h2 {
+            font-family: var(--font-heading);
+            font-size: 4.5rem;
+            font-weight: 450;
+        }
+
+        #hero .hero-content p {
+            font-size: 1.25rem;
+            margin: 1rem 0 2.5rem;
+            opacity: .9;
+        }
+        
         .image-wrapper {
             border-radius: 8px;
             overflow: hidden;
@@ -1546,7 +1580,8 @@
             .page-header::after {
                 display: none;
             }
-            .page-main-title {
+            .page-main-title,
+            #hero .hero-content h2 { /* 수정: 모바일 폰트 크기 조정 */
                 font-size: 2.8rem;
             }
             .section-heading {
@@ -1633,14 +1668,19 @@
 
     <div class="content-wrapper">
         <main>
-            <!-- HOME PAGE -->
+            <!-- ▼▼▼ [수정] home 페이지 콘텐츠 래퍼를 여기에 유지합니다. ▼▼▼ -->
             <div class="page-content-wrapper" data-page="home">
                 <section id="hero">
-                    <video id="hero-video" class="hero-video" src="images/영상1.mp4" loop muted playsinline></video>
+                    <video id="hero-video" class="hero-video" src="images/영상.mp4" loop muted playsinline></video>
+                    <!-- ▼▼▼ [수정] hero-content를 원래 위치인 #hero 내부로 이동시켰습니다. ▼▼▼ -->
+                    <div class="hero-content">
+                        <h2 class="fade-up">Slowly but Surely,</h2>
+                        <p class="fade-up" data-delay="300">일상에서 벗어나 온전한 당신을 마주하는 시간</p>
+                        <a href="programs.html" class="btn-secondary fade-up" data-delay="600">Discover Programs</a>
+                    </div>
                 </section>
 
                 <section class="content-section" style="padding-top: 180px;">
-                    <!-- ▼▼▼ [수정] 이미지 파일이 없을 경우를 대비해 주석 처리합니다. 이미지가 있다면 주석을 해제하세요. ▼▼▼ -->
                     <!-- 
                     <img src="images/leaf-decor.png" alt="decorative leaf" class="decorative-element leaf-1">
                     -->
@@ -1693,7 +1733,6 @@
 
                 <section class="content-section" style="background-color: #fff;">
                     <div class="container-narrow text-center">
-                        <!-- ▼▼▼ [수정] 이미지 파일이 없을 경우를 대비해 주석 처리합니다. 이미지가 있다면 주석을 해제하세요. ▼▼▼ -->
                         <!--
                         <img src="images/leaf-decor.png" alt="decorative leaf" class="decorative-element leaf-2">
                         -->
@@ -1714,16 +1753,16 @@
                     </div>
                     <div class="marquee-wrapper">
                         <div class="marquee-content">
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (1).jpg" alt="Before & After 1"><span>등/어깨 트러블  <i class="fas fa-arrow-right"></i>  깨끗한 피부결</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (2).jpg" alt="Before & After 2"><span>무너진 얼굴 라인  <i class="fas fa-arrow-right"></i>  매끈한 V 라인</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (3).jpg" alt="Before & After 3"><span>굽은 등/어깨 라인  <i class="fas fa-arrow-right"></i>  곧고 아름다운 라인</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (4).jpg" alt="Before & After 4"><span>칙칙한 피부 톤  <i class="fas fa-arrow-right"></i>  맑고 투명한 피부</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (5).jpg" alt="Before & After 5"><span>부종 및 순환 저하  <i class="fas fa-arrow-right"></i>  가볍고 편안한 바디</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (1).jpg" alt="Before & After 1"><span>등/어깨 트러블  <i class="fas fa-arrow-right"></i>  깨끗한 피부결</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (2).jpg" alt="Before & After 2"><span>무너진 얼굴 라인  <i class="fas fa-arrow-right"></i>  매끈한 V 라인</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (3).jpg" alt="Before & After 3"><span>굽은 등/어깨 라인  <i class="fas fa-arrow-right"></i>  곧고 아름다운 라인</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (4).jpg" alt="Before & After 4"><span>칙칙한 피부 톤  <i class="fas fa-arrow-right"></i>  맑고 투명한 피부</span></a></div>
-                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (5).jpg" alt="Before & After 5"><span>부종 및 순환 저하  <i class="fas fa-arrow-right"></i>  가볍고 편안한 바디</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (1).jpg" alt="Before & After 1"><span>등/어깨 트러블  <i class="fas fa-arrow-right"></i>  깨끗한 피부결</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (2).jpg" alt="Before & After 2"><span>무너진 얼굴 라인  <i class="fas fa-arrow-right"></i>  매끈한 V 라인</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (3).jpg" alt="Before & After 3"><span>굽은 등/어깨 라인  <i class="fas fa-arrow-right"></i>  곧고 아름다운 라인</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (4).jpg" alt="Before & After 4"><span>칙칙한 피부 톤  <i class="fas fa-arrow-right"></i>  맑고 투명한 피부</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (5).jpg" alt="Before & After 5"><span>부종 및 순환 저하  <i class="fas fa-arrow-right"></i>  가볍고 편안한 바디</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (1).jpg" alt="Before & After 1"><span>등/어깨 트러블  <i class="fas fa-arrow-right"></i>  깨끗한 피부결</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (2).jpg" alt="Before & After 2"><span>무너진 얼굴 라인  <i class="fas fa-arrow-right"></i>  매끈한 V 라인</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (3).jpg" alt="Before & After 3"><span>굽은 등/어깨 라인  <i class="fas fa-arrow-right"></i>  곧고 아름다운 라인</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (4).jpg" alt="Before & After 4"><span>칙칙한 피부 톤  <i class="fas fa-arrow-right"></i>  맑고 투명한 피부</span></a></div>
+                            <div class="marquee-item bna-item"><a href="javascript:void(0);"><img src="images/a (5).jpg" alt="Before & After 5"><span>부종 및 순환 저하  <i class="fas fa-arrow-right"></i>  가볍고 편안한 바디</span></a></div>
                         </div>
                     </div>
                 </section>
@@ -1783,7 +1822,7 @@
                             <button class="tab-btn" data-target="prenatal">Prenatal Care</button>
                             <button class="tab-btn" data-target="membership">Membership</button>
                         </div>
-                        <div class="program-content-wrapper">
+                                                                        <div class="program-content-wrapper">
                             <div id="facial" class="program-content-pane active">
                                 <div class="program-block">
                                     <div class="program-image-content">
@@ -1870,10 +1909,36 @@
                                     </div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Body Care</h2>
-                                        <p class="section-paragraph">순환을 돕고 긴장을 완화하여 몸의 균형을 되찾아주는 바디 케어. 천연 아로마 오일이 심신의 안정까지 더해줍니다.</p>
+                                        <p class="section-paragraph">정체된 에너지의 흐름을 원활하게 하여 몸의 감각을 깨우는 바디 케어입니다. 깊은 근막 이완 테크닉과 천연 아로마 오일의 시너지로 몸과 마음에 진정한 휴식을 선사합니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Body Treatment Price</button>
                                             <div class="accordion-panel">
+                                                <div class="treatment-descriptions">
+                                                    <div class="treatment-item">
+                                                        <h4>데콜테&팔</h4>
+                                                        <p>아름다운 어깨선과 목선을 드러내는 케어입니다. 뭉친 승모근과 어깨 근육을 섬세하게 이완시켜 우아한 실루엣을 완성하고, 팔의 순환을 도와 피부결을 매끄럽게 정돈합니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>복부</h4>
+                                                        <p>따뜻한 온열 관리와 부드러운 테크닉으로 장 기능을 활성화하고 복부의 가스를 배출시키는 케어입니다. 소화 불량 개선과 함께 편안하고 가벼운 몸을 되찾아 드립니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>등</h4>
+                                                        <p>만성적인 피로와 스트레스가 쌓이기 쉬운 등 전체를 깊이 있게 케어합니다. 뭉친 근육을 시원하게 풀어주어 통증을 완화하고, 비뚤어진 자세를 바로잡는 데 도움을 줍니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>하체</h4>
+                                                        <p>오래 서 있거나 앉아 있어 무거워진 다리의 부종과 피로를 해소하는 순환 관리입니다. 정체된 림프의 흐름을 촉진하여 가볍고 매끈한 다리 라인을 만들어 드립니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>후면</h4>
+                                                        <p>등부터 하체까지 이어지는 후면 전체의 긴장을 이완시키는 전용 케어입니다. 신체의 뒷 라인을 아름답게 정리하고, 깊은 이완을 통해 최상의 컨디션을 선사합니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>전신</h4>
+                                                        <p>머리부터 발끝까지, 온몸의 감각을 깨우는 홀리스틱 케어입니다. 각 신체 부위의 특성에 맞는 맞춤 테크닉으로 심신의 완벽한 균형과 조화를 이끌어냅니다.</p>
+                                                    </div>
+                                                </div>
                                                 <div class="price-table">
                                                     <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
                                                     <div class="price-table-row"><span>데콜테&팔</span><span>40 분</span><span>6 만원</span><span>8 만원</span></div>
@@ -1886,6 +1951,12 @@
                                             </div>
                                             <button class="accordion-btn">Body Peeling Price</button>
                                             <div class="accordion-panel">
+                                                <div class="treatment-descriptions">
+                                                    <div class="treatment-item">
+                                                        <h4>등 약초</h4>
+                                                        <p>등과 가슴의 트러블, 거친 피부결이 고민인 분들을 위한 솔루션입니다. 천연 약초 스피큘을 이용해 묵은 각질과 피지를 정리하고, 맑고 깨끗한 피부로 재탄생시킵니다.</p>
+                                                    </div>
+                                                </div>
                                                 <div class="price-table">
                                                     <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
                                                     <div class="price-table-row"><span>등 약초</span><span>60 분</span><span>15 만원</span><span>17 만원</span></div>
@@ -1902,7 +1973,7 @@
                                     </div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Signature Wedding</h2>
-                                        <p class="section-paragraph">생애 가장 빛나는 순간을 위한 토탈 케어. 페이스부터 바디 라인까지, 오직 신부님만을 위한 맞춤 프로그램을 설계합니다.</p>
+                                        <p class="section-paragraph">생애 가장 찬란하게 빛날 당신을 위한 시그니처 웨딩 케어. 드레스 라인을 완성하는 바디 컨투어링부터 맑고 투명한 피부 표현까지, 전문가가 전 과정을 함께하며 완벽한 하루를 선사합니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Package Price</button>
                                             <div class="accordion-panel">
@@ -1938,10 +2009,28 @@
                                     </div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Signature Contour</h2>
-                                        <p class="section-paragraph">최신 기기를 이용한 집중적인 리프팅 & 컨투어링 케어. 피부 속부터 탄력을 채워 매끈하고 선명한 라인을 완성합니다.</p>
+                                        <p class="section-paragraph">시간의 흐름에 무너진 얼굴의 선과 균형을 바로잡는 에스테티크만의 독자적인 컨투어링 케어입니다. 정밀 기기와 수기 테크닉의 결합으로 숨겨진 최적의 라인을 찾아드립니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Devices Price</button>
                                             <div class="accordion-panel">
+                                                <div class="treatment-descriptions">
+                                                    <div class="treatment-item">
+                                                        <h4>물방울 초음파</h4>
+                                                        <p>고밀도 초음파 에너지를 이용해 피부 속 세포를 활성화시키는 프리미엄 관리입니다. 통증이나 자극 없이 피부 본연의 보습력, 재생력, 면역력을 높여 건강한 피부 환경을 만듭니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>이온토 히팅&쿨링</h4>
+                                                        <p>온열 기능으로 모공을 열어 유효 성분의 흡수율을 극대화하고, 쿨링 기능으로 피부를 진정시키며 탄력을 부여하는 스마트 기기입니다. 앰플의 효과를 피부 깊숙이 전달합니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>RF 고주파</h4>
+                                                        <p>피부 진피층에 강력한 심부열을 발생시켜 콜라겐과 엘라스틴의 생성을 촉진합니다. 잔주름 개선과 함께 피부 속부터 차오르는 탄력과 타이트닝 효과를 경험할 수 있습니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>하이푸 리프팅</h4>
+                                                        <p>고강도 집속 초음파 에너지를 피부 가장 깊은 근막층(SMAS)에 직접 전달하여, 늘어진 피부를 강력하게 끌어올리는 비수술적 리프팅입니다. 즉각적인 윤곽 개선 효과를 선사합니다.</p>
+                                                    </div>
+                                                </div>
                                                 <div class="price-table">
                                                     <div class="price-table-header"><span>옵션명</span><span>시간</span><span></span><span>추가금</span></div>
                                                     <div class="price-table-row"><span>물방울 초음파</span><span>10 분</span><span></span><span>3 만원</span></div>
@@ -1961,10 +2050,24 @@
                                     </div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Prenatal Care</h2>
-                                        <p class="section-paragraph">소중한 생명을 품은 예비맘을 위한 섬세하고 편안한 케어. 급격한 신체 변화로 인한 불편함을 완화하고 깊은 휴식을 선사합니다.</p>
+                                        <p class="section-paragraph">소중한 생명을 품은 예비맘과 태아의 교감을 위한 가장 안전하고 편안한 케어입니다. 급격한 신체 변화로 인한 부종과 통증을 완화하고, 엄마와 아기 모두에게 깊은 안정을 선사합니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Prenatal Price</button>
                                             <div class="accordion-panel">
+                                                <div class="treatment-descriptions">
+                                                    <div class="treatment-item">
+                                                        <h4>산전 등</h4>
+                                                        <p>태아의 무게로 인해 발생하는 허리와 등의 통증, 어깨 결림을 부드럽게 완화합니다. 임산부에게 가장 편안한 자세에서 안전한 테크닉으로 진행되어 심리적 안정감을 더합니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>산전 하체</h4>
+                                                        <p>임신 중 쉽게 붓고 무거워지는 다리의 부종을 집중적으로 케어합니다. 정체된 혈액과 림프 순환을 원활하게 하여 다리의 피로감을 해소하고 쥐 내림을 예방합니다.</p>
+                                                    </div>
+                                                    <div class="treatment-item">
+                                                        <h4>산전 전신</h4>
+                                                        <p>엄마와 아기 모두를 위한 최상의 휴식을 선사하는 전신 케어입니다. 전용 유기농 오일을 사용하여 신체의 변화에 따른 불편함을 전반적으로 해소하고 깊은 이완을 유도합니다.</p>
+                                                    </div>
+                                                </div>
                                                 <div class="price-table">
                                                     <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
                                                     <div class="price-table-row"><span>산전 등</span><span>50 분</span><span>8 만원</span><span>10 만원</span></div>
@@ -2007,7 +2110,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </section>
             </div>
 
@@ -2400,23 +2502,16 @@
 
             const welcomeOverlay = document.getElementById('welcome-overlay');
             if (welcomeOverlay) {
-                // ▼▼▼ [수정] 스크립트 로직 개선 (새로고침 시 항상 시작 화면 표시) ▼▼▼
-                // sessionStorage 검사를 제거하여, 페이지 로드 시 항상 시작 화면을 표시하도록 설정합니다.
-                // 메인 콘텐츠는 숨기고, 페이지 스크롤을 막은 상태로 시작합니다.
+                // ▼▼▼ [수정] 다시 항상 시작 화면이 표시되도록 로직 변경 ▼▼▼
                 document.body.style.overflow = 'hidden';
                 document.querySelectorAll('.page-content-wrapper').forEach(p => p.classList.remove('active'));
 
                 document.getElementById('enter-site-btn').addEventListener('click', () => {
-                    // sessionStorage에 상태를 저장하는 코드를 제거합니다.
-                    // sessionStorage.setItem('siteEntered', 'true');
-
-                    // 오디오 재생 및 아이콘 설정
                     localStorage.setItem('aesthetiqueAudioMuted', 'false');
                     if (globalAudio) globalAudio.muted = false;
                     playAudio();
                     updateAudioIcon();
 
-                    // 시작 화면을 숨기고, 스크롤을 허용한 뒤, 홈 페이지 콘텐츠를 로드합니다.
                     welcomeOverlay.classList.add('hidden');
                     document.body.style.overflow = 'auto';
                     navigateTo('home');
