@@ -172,33 +172,6 @@
             margin: 4rem auto;
         }
 
-        /* 
-        [수정] leaf-decor.png 파일이 없어 콘솔 에러가 발생하므로 주석 처리합니다.
-              images/leaf-decor.png 파일이 준비되면 주석을 해제하여 사용하세요.
-        .decorative-element {
-            position: absolute;
-            opacity: 0.6;
-            z-index: -1;
-            animation: float-animation 6s ease-in-out infinite;
-        }
-        .decorative-element.leaf-1 {
-            width: 100px;
-            top: 10%;
-            left: 5%;
-        }
-        .decorative-element.leaf-2 {
-            width: 80px;
-            bottom: 15%;
-            right: 8%;
-            animation-delay: 2s;
-        }
-        @keyframes float-animation {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        */
-
         .section-eyebrow {
             font-size: .9rem;
             font-weight: 500;
@@ -681,17 +654,36 @@
         .program-card:hover p {
             color: var(--dark-color);
         }
-
+        
         .program-block {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 8rem;
-            align-items: center;
+            align-items: start;
+            transition: all .6s cubic-bezier(.4, 0, .2, 1);
         }
 
-        .text-pane {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
+        .program-image-content {
+            width: 100%;
+            transition: all .6s cubic-bezier(.4, 0, .2, 1);
+            transform-origin: center;
+        }
+        
+        .program-block.is-expanded {
+            grid-template-columns: 0fr 1fr;
+            gap: 0;
+        }
+        
+        .program-block.reverse.is-expanded {
+            grid-template-columns: 1fr 0fr;
+        }
+
+        .program-block.is-expanded .program-image-content {
+            width: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            transform: scale(0.9);
         }
 
         .program-block.reverse .program-image-content {
@@ -752,32 +744,69 @@
             overflow: hidden;
             transition: max-height .5s ease-in-out, padding .5s ease-in-out;
         }
-
-        .price-table {
-            padding: 2rem 0;
+        
+        .program-detail-list {
+            padding: 1.5rem 0;
         }
 
-        .price-table>div {
-            display: grid;
-            grid-template-columns: 3fr 1fr 1fr 1fr;
-            padding: .8rem 0;
-            border-bottom: 1px solid #f5f5f5;
-            align-items: center;
+        .program-detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 2rem;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .program-detail-item:first-child {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .program-detail-main {
+            flex-grow: 1;
+        }
+        
+        .program-detail-main h4 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: .5rem;
+            color: var(--dark-color);
+        }
+
+        .program-detail-main p {
             font-size: .95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            padding-right: 1rem;
         }
-
-        .price-table .price-table-header {
-            font-weight: 500;
-            color: #000;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .price-table .price-table-row span:first-child {
-            font-weight: 400;
-        }
-
-        .price-table .price-table-row span:not(:first-child) {
+        
+        .program-detail-meta {
+            display: flex;
+            gap: 3rem;
+            align-items: baseline;
             text-align: right;
+            font-size: 1rem;
+            color: var(--text-light);
+            flex-shrink: 0;
+        }
+        .program-detail-meta span, .program-detail-meta div {
+            min-width: 100px;
+        }
+        
+        .program-detail-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+
+        .program-detail-price strong {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+        .program-detail-price del {
+            font-size: .9rem;
             color: var(--text-light);
         }
 
@@ -1325,7 +1354,7 @@
                 transform: translateY(0)
             }
         }
-
+        
         .audio-control {
             position: fixed;
             bottom: 30px;
@@ -1565,44 +1594,20 @@
             color: var(--text-light);
         }
 
-        .treatment-descriptions {
-            padding: 2rem 5px .5rem;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
-
-        .treatment-item {
-            margin-bottom: 1.8rem;
-        }
-
-        .treatment-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .treatment-item h4 {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: .5rem;
-        }
-
-        .treatment-item p {
-            font-size: .95rem;
-            color: var(--text-light);
-            line-height: 1.7;
-        }
-
         /* --- 반응형 웹 (Responsive Web) CSS --- */
 
         @media (max-width: 992px) {
-            .split-layout,
-            .program-block {
+            .split-layout, .program-block, .program-block.is-expanded {
                 grid-template-columns: 1fr;
                 gap: 4rem;
             }
             .program-block.reverse .program-image-content {
                 grid-column: 1/2;
+            }
+            .program-block.is-expanded .program-image-content {
+                width: 100%;
+                opacity: 1;
+                transform: none;
             }
             .program-text-content,
             .program-text-content .section-heading,
@@ -1624,6 +1629,13 @@
             .footer-links {
                  grid-template-columns: repeat(2, 1fr);
             }
+            .program-detail-item {
+                 flex-direction: column;
+                 gap: 0.5rem;
+                 align-items: stretch;
+            }
+            .program-detail-main p { padding-right: 0;}
+            .program-detail-meta { flex-direction: row; }
         }
 
         @media (max-width: 768px) {
@@ -1749,10 +1761,8 @@
                 margin: 0 1rem;
             }
 
-            .event-grid { grid-template-columns: 1fr; }
-            .price-table>div { grid-template-columns: 2fr 1fr 1fr; }
-            .price-table>div span:nth-child(2) { display: none; }
-            .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 280px; }
+            .event-grid, .gallery-grid, .locations-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-auto-rows: 280px; }
             .gallery-item.large-h, .gallery-item.large-v { grid-column: auto; grid-row: auto; }
             #promotion-marquee { padding: 80px 0; }
             .marquee-item { width: 280px; }
@@ -1761,6 +1771,56 @@
             .program-tabs { flex-wrap: wrap; justify-content: flex-start; }
             #talk-widget { bottom: 20px; left: 20px; }
             .testimonial-text { font-size: 1.1rem; }
+
+            /* ▼▼▼ 모바일 프로그램 페이지 최적화 ▼▼▼ */
+            .program-tabs { margin-bottom: 2rem; }
+            .program-block .program-image-content { display: none; }
+            .accordion-wrapper { margin-top: 0; border-top: none; }
+            .accordion-btn { font-size: 1.3rem; padding: 20px 0; }
+            .accordion-btn:after { display: none; }
+            .accordion-panel {
+                padding: 0;
+                background-color: var(--bg-color);
+                margin: 0 -20px;
+                max-height: none !important;
+                overflow: visible;
+            }
+            .program-detail-list {
+                display: block;
+                padding: 1rem 20px;
+            }
+            .program-detail-item {
+                display: flex;
+                flex-direction: column;
+                background-color: var(--off-white);
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin-bottom: 1rem;
+                gap: .5rem;
+            }
+            .program-detail-item:first-child { border-top: 1px solid var(--border-color); }
+            .program-detail-main h4 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+            .program-detail-main p { margin-bottom: .75rem; font-size: 0.9rem; line-height: 1.8; }
+            .program-detail-meta {
+                flex-direction: column;
+                gap: .5rem;
+                text-align: left;
+                border-top: 1px solid var(--border-color);
+                padding-top: 1rem;
+                margin-top: auto;
+            }
+            .program-detail-meta span, .program-detail-meta div { min-width: 0; }
+            .program-detail-time { text-align: left; font-size: .9rem; font-weight: 500; color: var(--primary-color); }
+            .program-detail-price {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                font-size: .95rem;
+            }
+             .program-detail-price strong { font-size: 1.1rem; }
+             .program-detail-price del { font-size: .9rem; }
+            /* ▲▲▲ 모바일 프로그램 페이지 최적화 ▲▲▲ */
         }
     </style>
 </head>
@@ -1824,10 +1884,6 @@
                 </section>
 
                 <section class="content-section" style="padding-top: 180px;">
-                    <!-- 
-                    [수정] leaf-decor.png 파일이 없어 콘솔 에러가 발생하므로 주석 처리합니다.
-                    <img src="images/leaf-decor.png" alt="decorative leaf" class="decorative-element leaf-1">
-                    -->
                     <div class="container split-layout-overlapped">
                         <div class="split-layout">
                             <div class="text-pane fade-up text-pane-decorated" data-bg-text="01">
@@ -1877,10 +1933,6 @@
 
                 <section class="content-section" style="background-color: #fff;">
                     <div class="container-narrow text-center">
-                        <!--
-                        [수정] leaf-decor.png 파일이 없어 콘솔 에러가 발생하므로 주석 처리합니다.
-                        <img src="images/leaf-decor.png" alt="decorative leaf" class="decorative-element leaf-2">
-                        -->
                         <h3 class="section-eyebrow fade-up">Testimonial</h3>
                         <h2 class="section-heading fade-up">진심이 담긴 경험</h2>
                         <div class="testimonial-wrapper fade-up" data-delay="200">
@@ -1970,77 +2022,29 @@
                         <div class="program-content-wrapper">
                             <div id="facial" class="program-content-pane active">
                                 <div class="program-block">
-                                    <div class="program-image-content">
-                                        <div class="image-wrapper shadow-soft"><img src="images/facial.jpg" alt="페이셜 케어"></div>
-                                    </div>
+                                    <div class="program-image-content"><div class="image-wrapper shadow-soft"><img src="images/facial.jpg" alt="페이셜 케어"></div></div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Facial Care</h2>
                                         <p class="section-paragraph">피부 본연의 건강함을 되찾아주는 페이셜 케어. 정밀한 진단을 통해 피부 타입과 컨디션에 맞는 최적의 솔루션을 제공합니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Treatment Price</button>
                                             <div class="accordion-panel">
-                                                <div class="treatment-descriptions">
-                                                    <div class="treatment-item">
-                                                        <h4>수분</h4>
-                                                        <p>미네랄이 풍부한 해수와 단백질, 비타민 등 활성성분을 함유한 딸고 트리트먼트</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>영양</h4>
-                                                        <p>느슨한 피부 밀도를 채워 깊숙한 보습과 즉각적으로 생기를 넣어주는 기노 트리트먼트</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>재건</h4>
-                                                        <p>노화된 피부에 고밀도 진동에너지를 주어 세포를 활성화, 피부장벽을 복합적으로 개선하는 트리트먼트</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>면역</h4>
-                                                        <p>피부 표면의 유해균을 유익균으로 바꾸어 활성 산소를 제거, 피부를 즉각 진정시키고 장벽을 강화시키는 트리트먼트</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>해독</h4>
-                                                        <p>피부 속 독소 배출을 도와 안색을 개선하고 트러블을 예방하는 디톡스 트리트먼트</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>리셋</h4>
-                                                        <p>고분자 히알루론산과 아미노산, 비타민, 효소, 핵산, 미네랄과 식이섬유로 조합된 부스터 앰플을 니들로 침투시켜 피부전반을 리셋</p>
-                                                    </div>
-                                                </div>
-                                                <div class="price-table">
-                                                    <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
-                                                    <div class="price-table-row"><span>수분</span><span>60 분</span><span>7 만원</span><span>9 만원</span></div>
-                                                    <div class="price-table-row"><span>영양</span><span>60 분</span><span>7 만원</span><span>9 만원</span></div>
-                                                    <div class="price-table-row"><span>재건</span><span>60 분</span><span>9 만원</span><span>11 만원</span></div>
-                                                    <div class="price-table-row"><span>면역</span><span>70 분</span><span>11 만원</span><span>13 만원</span></div>
-                                                    <div class="price-table-row"><span>해독</span><span>70 분</span><span>12 만원</span><span>14 만원</span></div>
-                                                    <div class="price-table-row"><span>리셋</span><span>80 분</span><span>15 만원</span><span>17 만원</span></div>
+                                                <div class="program-detail-list">
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>수분</h4><p>미네랄이 풍부한 해수와 단백질, 비타민 등 활성성분을 함유한 딸고 트리트먼트</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>7만원</strong></span><span>비회원가<strong>9만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>영양</h4><p>느슨한 피부 밀도를 채워 깊숙한 보습과 즉각적으로 생기를 넣어주는 기노 트리트먼트</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>7만원</strong></span><span>비회원가<strong>9만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>재건</h4><p>노화된 피부에 고밀도 진동에너지를 주어 세포를 활성화, 피부장벽을 복합적으로 개선하는 트리트먼트</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>9만원</strong></span><span>비회원가<strong>11만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>면역</h4><p>피부 표면의 유해균을 유익균으로 바꾸어 활성 산소를 제거, 피부를 즉각 진정시키고 장벽을 강화시키는 트리트먼트</p></div><div class="program-detail-meta"><span class="program-detail-time">70 분</span><div class="program-detail-price"><span>회원가<strong>11만원</strong></span><span>비회원가<strong>13만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>해독</h4><p>피부 속 독소 배출을 도와 안색을 개선하고 트러블을 예방하는 디톡스 트리트먼트</p></div><div class="program-detail-meta"><span class="program-detail-time">70 분</span><div class="program-detail-price"><span>회원가<strong>12만원</strong></span><span>비회원가<strong>14만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>리셋</h4><p>고분자 히알루론산과 아미노산, 비타민, 효소, 핵산, 미네랄과 식이섬유로 조합된 부스터 앰플을 니들로 침투시켜 피부전반을 리셋</p></div><div class="program-detail-meta"><span class="program-detail-time">80 분</span><div class="program-detail-price"><span>회원가<strong>15만원</strong></span><span>비회원가<strong>17만원</strong></span></div></div></div>
                                                 </div>
                                             </div>
                                             <button class="accordion-btn">Peeling Price</button>
                                             <div class="accordion-panel">
-                                                <div class="treatment-descriptions">
-                                                    <div class="treatment-item">
-                                                        <h4>약초</h4>
-                                                        <p>피부 깊숙이 침투한 천연 스피큘이 상처를 내어 염증 반응을 유도, 표피와 진피 세포재생을 돕는 재생 복구 필</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>물광</h4>
-                                                        <p>항산화와 보습력이 우수한 PHA를 이용한 필링과, 하이드라 수분막을 형성해 피부 깊숙이 물광효과를 부여합니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>미백</h4>
-                                                        <p>나이아신 아마이드 성분을 이용해 피부 표면에 착색된 멜라노좀을 흡수하고 분해하여 본래의 윤광을 회복시켜주는 미백필</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>퍼밍</h4>
-                                                        <p>콜라겐 생성을 촉진하여 피부 탄력을 증진시키고, 미세 주름을 개선하는 안티에이징 필링입니다.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="price-table">
-                                                    <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
-                                                    <div class="price-table-row"><span>약초</span><span>50 분</span><span>11 만원</span><span>13 만원</span></div>
-                                                    <div class="price-table-row"><span>물광</span><span>60 분</span><span>11 만원</span><span>13 만원</span></div>
-                                                    <div class="price-table-row"><span>미백</span><span>60 분</span><span>11 만원</span><span>13 만원</span></div>
-                                                    <div class="price-table-row"><span>퍼밍</span><span>60 분</span><span>12 만원</span><span>14 만원</span></div>
+                                                <div class="program-detail-list">
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>약초</h4><p>피부 깊숙이 침투한 천연 스피큘이 상처를 내어 염증 반응을 유도, 표피와 진피 세포재생을 돕는 재생 복구 필</p></div><div class="program-detail-meta"><span class="program-detail-time">50 분</span><div class="program-detail-price"><span>회원가<strong>11만원</strong></span><span>비회원가<strong>13만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>물광</h4><p>항산화와 보습력이 우수한 PHA를 이용한 필링과, 하이드라 수분막을 형성해 피부 깊숙이 물광효과를 부여합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>11만원</strong></span><span>비회원가<strong>13만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>미백</h4><p>나이아신 아마이드 성분을 이용해 피부 표면에 착색된 멜라노좀을 흡수하고 분해하여 본래의 윤광을 회복시켜주는 미백필</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>11만원</strong></span><span>비회원가<strong>13만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>퍼밍</h4><p>콜라겐 생성을 촉진하여 피부 탄력을 증진시키고, 미세 주름을 개선하는 안티에이징 필링입니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>12만원</strong></span><span>비회원가<strong>14만원</strong></span></div></div></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -2049,62 +2053,26 @@
                             </div>
                             <div id="body" class="program-content-pane">
                                 <div class="program-block reverse">
-                                    <div class="program-image-content">
-                                        <div class="image-wrapper shadow-soft"><img src="images/body.jpg" alt="바디 케어"></div>
-                                    </div>
+                                    <div class="program-image-content"><div class="image-wrapper shadow-soft"><img src="images/body.jpg" alt="바디 케어"></div></div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Body Care</h2>
                                         <p class="section-paragraph">정체된 에너지의 흐름을 원활하게 하여 몸의 감각을 깨우는 바디 케어입니다. 깊은 근막 이완 테크닉과 천연 아로마 오일의 시너지로 몸과 마음에 진정한 휴식을 선사합니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Body Treatment Price</button>
                                             <div class="accordion-panel">
-                                                <div class="treatment-descriptions">
-                                                    <div class="treatment-item">
-                                                        <h4>데콜테&팔</h4>
-                                                        <p>아름다운 어깨선과 목선을 드러내는 케어입니다. 뭉친 승모근과 어깨 근육을 섬세하게 이완시켜 우아한 실루엣을 완성하고, 팔의 순환을 도와 피부결을 매끄럽게 정돈합니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>복부</h4>
-                                                        <p>따뜻한 온열 관리와 부드러운 테크닉으로 장 기능을 활성화하고 복부의 가스를 배출시키는 케어입니다. 소화 불량 개선과 함께 편안하고 가벼운 몸을 되찾아 드립니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>등</h4>
-                                                        <p>만성적인 피로와 스트레스가 쌓이기 쉬운 등 전체를 깊이 있게 케어합니다. 뭉친 근육을 시원하게 풀어주어 통증을 완화하고, 비뚤어진 자세를 바로잡는 데 도움을 줍니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>하체</h4>
-                                                        <p>오래 서 있거나 앉아 있어 무거워진 다리의 부종과 피로를 해소하는 순환 관리입니다. 정체된 림프의 흐름을 촉진하여 가볍고 매끈한 다리 라인을 만들어 드립니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>후면</h4>
-                                                        <p>등부터 하체까지 이어지는 후면 전체의 긴장을 이완시키는 전용 케어입니다. 신체의 뒷 라인을 아름답게 정리하고, 깊은 이완을 통해 최상의 컨디션을 선사합니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>전신</h4>
-                                                        <p>머리부터 발끝까지, 온몸의 감각을 깨우는 홀리스틱 케어입니다. 각 신체 부위의 특성에 맞는 맞춤 테크닉으로 심신의 완벽한 균형과 조화를 이끌어냅니다.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="price-table">
-                                                    <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
-                                                    <div class="price-table-row"><span>데콜테&팔</span><span>40 분</span><span>6 만원</span><span>8 만원</span></div>
-                                                    <div class="price-table-row"><span>복부</span><span>40 분</span><span>6 만원</span><span>8 만원</span></div>
-                                                    <div class="price-table-row"><span>등</span><span>50 분</span><span>7 만원</span><span>9 만원</span></div>
-                                                    <div class="price-table-row"><span>하체</span><span>50 분</span><span>8 만원</span><span>10 만원</span></div>
-                                                    <div class="price-table-row"><span>후면</span><span>60 분</span><span>9 만원</span><span>11 만원</span></div>
-                                                    <div class="price-table-row"><span>전신</span><span>100 분</span><span>16 만원</span><span>18 만원</span></div>
+                                                 <div class="program-detail-list">
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>데콜테&팔</h4><p>아름다운 어깨선과 목선을 드러내는 케어입니다. 뭉친 승모근과 어깨 근육을 섬세하게 이완시켜 우아한 실루엣을 완성하고, 팔의 순환을 도와 피부결을 매끄럽게 정돈합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">40 분</span><div class="program-detail-price"><span>회원가<strong>6만원</strong></span><span>비회원가<strong>8만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>복부</h4><p>따뜻한 온열 관리와 부드러운 테크닉으로 장 기능을 활성화하고 복부의 가스를 배출시키는 케어입니다. 소화 불량 개선과 함께 편안하고 가벼운 몸을 되찾아 드립니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">40 분</span><div class="program-detail-price"><span>회원가<strong>6만원</strong></span><span>비회원가<strong>8만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>등</h4><p>만성적인 피로와 스트레스가 쌓이기 쉬운 등 전체를 깊이 있게 케어합니다. 뭉친 근육을 시원하게 풀어주어 통증을 완화하고, 비뚤어진 자세를 바로잡는 데 도움을 줍니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">50 분</span><div class="program-detail-price"><span>회원가<strong>7만원</strong></span><span>비회원가<strong>9만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>하체</h4><p>오래 서 있거나 앉아 있어 무거워진 다리의 부종과 피로를 해소하는 순환 관리입니다. 정체된 림프의 흐름을 촉진하여 가볍고 매끈한 다리 라인을 만들어 드립니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">50 분</span><div class="program-detail-price"><span>회원가<strong>8만원</strong></span><span>비회원가<strong>10만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>후면</h4><p>등부터 하체까지 이어지는 후면 전체의 긴장을 이완시키는 전용 케어입니다. 신체의 뒷 라인을 아름답게 정리하고, 깊은 이완을 통해 최상의 컨디션을 선사합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>9만원</strong></span><span>비회원가<strong>11만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>전신</h4><p>머리부터 발끝까지, 온몸의 감각을 깨우는 홀리스틱 케어입니다. 각 신체 부위의 특성에 맞는 맞춤 테크닉으로 심신의 완벽한 균형과 조화를 이끌어냅니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">100 분</span><div class="program-detail-price"><span>회원가<strong>16만원</strong></span><span>비회원가<strong>18만원</strong></span></div></div></div>
                                                 </div>
                                             </div>
                                             <button class="accordion-btn">Body Peeling Price</button>
                                             <div class="accordion-panel">
-                                                <div class="treatment-descriptions">
-                                                    <div class="treatment-item">
-                                                        <h4>등 약초</h4>
-                                                        <p>등과 가슴의 트러블, 거친 피부결이 고민인 분들을 위한 솔루션입니다. 천연 약초 스피큘을 이용해 묵은 각질과 피지를 정리하고, 맑고 깨끗한 피부로 재탄생시킵니다.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="price-table">
-                                                    <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
-                                                    <div class="price-table-row"><span>등 약초</span><span>60 분</span><span>15 만원</span><span>17 만원</span></div>
+                                                <div class="program-detail-list">
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>등 약초</h4><p>등과 가슴의 트러블, 거친 피부결이 고민인 분들을 위한 솔루션입니다. 천연 약초 스피큘을 이용해 묵은 각질과 피지를 정리하고, 맑고 깨끗한 피부로 재탄생시킵니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">60 분</span><div class="program-detail-price"><span>회원가<strong>15만원</strong></span><span>비회원가<strong>17만원</strong></span></div></div></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -2113,35 +2081,24 @@
                             </div>
                             <div id="wedding" class="program-content-pane">
                                 <div class="program-block">
-                                    <div class="program-image-content">
-                                        <div class="image-wrapper shadow-soft"><img src="images/wedding.jpg" alt="시그니처 웨딩 케어"></div>
-                                    </div>
+                                    <div class="program-image-content"><div class="image-wrapper shadow-soft"><img src="images/wedding.jpg" alt="시그니처 웨딩 케어"></div></div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Signature Wedding</h2>
                                         <p class="section-paragraph">생애 가장 찬란하게 빛날 당신을 위한 시그니처 웨딩 케어. 드레스 라인을 완성하는 바디 컨투어링부터 맑고 투명한 피부 표현까지, 전문가가 전 과정을 함께하며 완벽한 하루를 선사합니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Package Price</button>
                                             <div class="accordion-panel">
-                                                <div class="price-table">
-                                                    <div class="price-table-header"><span>횟수</span><span>정가</span><span>할인율</span><span>할인가</span></div>
-                                                    <div class="price-table-row"><span>5 회</span><span>80 만원</span><span>15%</span><span>68 만원</span></div>
-                                                    <div class="price-table-row"><span>10 회</span><span>160 만원</span><span>20%</span><span>130 만원</span></div>
-                                                    <div class="price-table-row"><span>20 회</span><span>310 만원</span><span>25%</span><span>230 만원</span></div>
+                                                <div class="program-detail-list">
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>5회 패키지 (15% 할인)</h4><p>가장 중요한 순간을 위한 집중 케어 플랜입니다.</p></div><div class="program-detail-meta"><span class="program-detail-time"><del>80 만원</del></span><div class="program-detail-price"><strong>68 만원</strong></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>10회 패키지 (20% 할인)</h4><p>눈에 띄는 변화를 위한 최적의 케어 플랜입니다.</p></div><div class="program-detail-meta"><span class="program-detail-time"><del>160 만원</del></span><div class="program-detail-price"><strong>130 만원</strong></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>20회 패키지 (25% 할인)</h4><p>완벽한 아름다움을 위한 프리미엄 케어 플랜입니다.</p></div><div class="program-detail-meta"><span class="program-detail-time"><del>310 만원</del></span><div class="program-detail-price"><strong>230 만원</strong></div></div></div>
                                                 </div>
                                                 <p class="section-note">※ 1회 체험 현금가 12만원 (정상가 16만원).<br>※ 카드 결제 시 10%의 부가세가 포함됩니다.</p>
                                             </div>
                                             <button class="accordion-btn">회차별 프로그램 상세</button>
                                             <div class="accordion-panel">
-                                                <div class="session-item">
-                                                    <h4>베이직 (80분)</h4>
-                                                    <p><strong>Back / 후면 승모근 케어:</strong> 등까지 깊게 이어진 승모근을 전체적으로 풀어 복선과 어깨 라인 정리</p>
-                                                    <p><strong>Lifting / 기노 케어 & 윤곽 테크닉:</strong> 풍부한 영양의 기노 트리트먼트와 함께 콜라겐 세럼을 사용한 윤곽 테크닉</p>
-                                                </div>
-                                                <div class="session-item">
-                                                    <h4>특수 관리 (80분)</h4>
-                                                    <p><strong>5회:</strong> 2, 4회차 하이푸 - 본식 1주 전 포함<br><strong>10회:</strong> 3, 6, 9회차 하이푸 / 10회차 물광 - 본식 1일 전<br><strong>20회:</strong> 4회차 면역, 7/14회차 미백, 17회차 리셋, 13/16/19회차 하이푸, 10/20회차 물광</p>
-                                                    <p class="section-note">※ 피부 상태, 컨디션, 본식 날짜에 따라 조율 가능합니다.</p>
-                                                </div>
+                                                <div class="session-item"><h4>베이직 (80분)</h4><p><strong>Back / 후면 승모근 케어:</strong> 등까지 깊게 이어진 승모근을 전체적으로 풀어 복선과 어깨 라인 정리</p><p><strong>Lifting / 기노 케어 & 윤곽 테크닉:</strong> 풍부한 영양의 기노 트리트먼트와 함께 콜라겐 세럼을 사용한 윤곽 테크닉</p></div>
+                                                <div class="session-item"><h4>특수 관리 (80분)</h4><p><strong>5회:</strong> 2, 4회차 하이푸 - 본식 1주 전 포함<br><strong>10회:</strong> 3, 6, 9회차 하이푸 / 10회차 물광 - 본식 1일 전<br><strong>20회:</strong> 4회차 면역, 7/14회차 미백, 17회차 리셋, 13/16/19회차 하이푸, 10/20회차 물광</p><p class="section-note">※ 피부 상태, 컨디션, 본식 날짜에 따라 조율 가능합니다.</p></div>
                                             </div>
                                         </div>
                                     </div>
@@ -2149,39 +2106,18 @@
                             </div>
                             <div id="contour" class="program-content-pane">
                                 <div class="program-block reverse">
-                                    <div class="program-image-content">
-                                        <div class="image-wrapper shadow-soft"><img src="images/a (2).jpg" alt="시그니처 컨투어"></div>
-                                    </div>
+                                    <div class="program-image-content"><div class="image-wrapper shadow-soft"><img src="images/a (2).jpg" alt="시그니처 컨투어"></div></div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Signature Contour</h2>
                                         <p class="section-paragraph">시간의 흐름에 무너진 얼굴의 선과 균형을 바로잡는 에스테티크만의 독자적인 컨투어링 케어입니다. 정밀 기기와 수기 테크닉의 결합으로 숨겨진 최적의 라인을 찾아드립니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Devices Price</button>
                                             <div class="accordion-panel">
-                                                <div class="treatment-descriptions">
-                                                    <div class="treatment-item">
-                                                        <h4>물방울 초음파</h4>
-                                                        <p>고밀도 초음파 에너지를 이용해 피부 속 세포를 활성화시키는 프리미엄 관리입니다. 통증이나 자극 없이 피부 본연의 보습력, 재생력, 면역력을 높여 건강한 피부 환경을 만듭니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>이온토 히팅&쿨링</h4>
-                                                        <p>온열 기능으로 모공을 열어 유효 성분의 흡수율을 극대화하고, 쿨링 기능으로 피부를 진정시키며 탄력을 부여하는 스마트 기기입니다. 앰플의 효과를 피부 깊숙이 전달합니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>RF 고주파</h4>
-                                                        <p>피부 진피층에 강력한 심부열을 발생시켜 콜라겐과 엘라스틴의 생성을 촉진합니다. 잔주름 개선과 함께 피부 속부터 차오르는 탄력과 타이트닝 효과를 경험할 수 있습니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>하이푸 리프팅</h4>
-                                                        <p>고강도 집속 초음파 에너지를 피부 가장 깊은 근막층(SMAS)에 직접 전달하여, 늘어진 피부를 강력하게 끌어올리는 비수술적 리프팅입니다. 즉각적인 윤곽 개선 효과를 선사합니다.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="price-table">
-                                                    <div class="price-table-header"><span>옵션명</span><span>시간</span><span></span><span>추가금</span></div>
-                                                    <div class="price-table-row"><span>물방울 초음파</span><span>10 분</span><span></span><span>3 만원</span></div>
-                                                    <div class="price-table-row"><span>이온토 히팅&쿨링</span><span>10 분</span><span></span><span>3 만원</span></div>
-                                                    <div class="price-table-row"><span>RF 고주파</span><span></span><span></span><span>5 만원</span></div>
-                                                    <div class="price-table-row"><span>하이푸 리프팅</span><span></span><span></span><span>5 만원</span></div>
+                                                <div class="program-detail-list">
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>물방울 초음파</h4><p>고밀도 초음파 에너지를 이용해 피부 속 세포를 활성화시키는 프리미엄 관리입니다. 통증이나 자극 없이 피부 본연의 보습력, 재생력, 면역력을 높여 건강한 피부 환경을 만듭니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">10 분</span><div class="program-detail-price"><span>추가금</span><strong>3 만원</strong></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>이온토 히팅&쿨링</h4><p>온열 기능으로 모공을 열어 유효 성분의 흡수율을 극대화하고, 쿨링 기능으로 피부를 진정시키며 탄력을 부여하는 스마트 기기입니다. 앰플의 효과를 피부 깊숙이 전달합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">10 분</span><div class="program-detail-price"><span>추가금</span><strong>3 만원</strong></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>RF 고주파</h4><p>피부 진피층에 강력한 심부열을 발생시켜 콜라겐과 엘라스틴의 생성을 촉진합니다. 잔주름 개선과 함께 피부 속부터 차오르는 탄력과 타이트닝 효과를 경험할 수 있습니다.</p></div><div class="program-detail-meta"><span class="program-detail-time"></span><div class="program-detail-price"><span>추가금</span><strong>5 만원</strong></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>하이푸 리프팅</h4><p>고강도 집속 초음파 에너지를 피부 가장 깊은 근막층(SMAS)에 직접 전달하여, 늘어진 피부를 강력하게 끌어올리는 비수술적 리프팅입니다. 즉각적인 윤곽 개선 효과를 선사합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time"></span><div class="program-detail-price"><span>추가금</span><strong>5 만원</strong></div></div></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -2190,34 +2126,17 @@
                             </div>
                             <div id="prenatal" class="program-content-pane">
                                 <div class="program-block">
-                                    <div class="program-image-content">
-                                        <div class="image-wrapper shadow-soft"><img src="images/a (14).jpg" alt="산전 케어"></div>
-                                    </div>
+                                    <div class="program-image-content"><div class="image-wrapper shadow-soft"><img src="images/a (14).jpg" alt="산전 케어"></div></div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Prenatal Care</h2>
                                         <p class="section-paragraph">소중한 생명을 품은 예비맘과 태아의 교감을 위한 가장 안전하고 편안한 케어입니다. 급격한 신체 변화로 인한 부종과 통증을 완화하고, 엄마와 아기 모두에게 깊은 안정을 선사합니다.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">Prenatal Price</button>
                                             <div class="accordion-panel">
-                                                <div class="treatment-descriptions">
-                                                    <div class="treatment-item">
-                                                        <h4>산전 등</h4>
-                                                        <p>태아의 무게로 인해 발생하는 허리와 등의 통증, 어깨 결림을 부드럽게 완화합니다. 임산부에게 가장 편안한 자세에서 안전한 테크닉으로 진행되어 심리적 안정감을 더합니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>산전 하체</h4>
-                                                        <p>임신 중 쉽게 붓고 무거워지는 다리의 부종을 집중적으로 케어합니다. 정체된 혈액과 림프 순환을 원활하게 하여 다리의 피로감을 해소하고 쥐 내림을 예방합니다.</p>
-                                                    </div>
-                                                    <div class="treatment-item">
-                                                        <h4>산전 전신</h4>
-                                                        <p>엄마와 아기 모두를 위한 최상의 휴식을 선사하는 전신 케어입니다. 전용 유기농 오일을 사용하여 신체의 변화에 따른 불편함을 전반적으로 해소하고 깊은 이완을 유도합니다.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="price-table">
-                                                    <div class="price-table-header"><span>관리명</span><span>시간</span><span>회원가</span><span>비회원가</span></div>
-                                                    <div class="price-table-row"><span>산전 등</span><span>50 분</span><span>8 만원</span><span>10 만원</span></div>
-                                                    <div class="price-table-row"><span>산전 하체</span><span>50 분</span><span>9 만원</span><span>11 만원</span></div>
-                                                    <div class="price-table-row"><span>산전 전신</span><span>90 분</span><span>15 만원</span><span>17 만원</span></div>
+                                                <div class="program-detail-list">
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>산전 등</h4><p>태아의 무게로 인해 발생하는 허리와 등의 통증, 어깨 결림을 부드럽게 완화합니다. 임산부에게 가장 편안한 자세에서 안전한 테크닉으로 진행되어 심리적 안정감을 더합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">50 분</span><div class="program-detail-price"><span>회원가<strong>8만원</strong></span><span>비회원가<strong>10만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>산전 하체</h4><p>임신 중 쉽게 붓고 무거워지는 다리의 부종을 집중적으로 케어합니다. 정체된 혈액과 림프 순환을 원활하게 하여 다리의 피로감을 해소하고 쥐 내림을 예방합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">50 분</span><div class="program-detail-price"><span>회원가<strong>9만원</strong></span><span>비회원가<strong>11만원</strong></span></div></div></div>
+                                                    <div class="program-detail-item"><div class="program-detail-main"><h4>산전 전신</h4><p>엄마와 아기 모두를 위한 최상의 휴식을 선사하는 전신 케어입니다. 전용 유기농 오일을 사용하여 신체의 변화에 따른 불편함을 전반적으로 해소하고 깊은 이완을 유도합니다.</p></div><div class="program-detail-meta"><span class="program-detail-time">90 분</span><div class="program-detail-price"><span>회원가<strong>15만원</strong></span><span>비회원가<strong>17만원</strong></span></div></div></div>
                                                 </div>
                                                 <p class="section-note">※ 아기에게 사용 가능한 순한 마사지 오일로 부드럽게 진행됩니다.</p>
                                             </div>
@@ -2226,30 +2145,19 @@
                                 </div>
                             </div>
                             <div id="membership" class="program-content-pane">
-                                <div class="program-block reverse">
-                                    <div class="program-image-content">
-                                        <div class="image-wrapper shadow-soft"><img src="images/a (33).jpg" alt="멤버십 혜택"></div>
-                                    </div>
+                                <div class="program-block">
+                                     <div class="program-image-content"><div class="image-wrapper shadow-soft"><img src="images/a (33).jpg" alt="멤버십 혜택"></div></div>
                                     <div class="program-text-content">
                                         <h2 class="section-heading">Membership Benefits</h2>
                                         <p class="section-paragraph">에스테티크를 꾸준히 찾아주시는 멤버십 고객님께는 더욱 특별한 혜택이 제공됩니다. 정기적인 관리를 통해 최상의 컨디션을 유지해 보세요.</p>
                                         <div class="accordion-wrapper">
                                             <button class="accordion-btn">주요 혜택</button>
                                             <div class="accordion-panel">
-                                                <div class="session-item">
-                                                    <h4>회원가 적용</h4>
-                                                    <p>모든 페이셜 및 바디 프로그램을 회원 특별가로 이용하실 수 있습니다.</p>
-                                                </div>
-                                                <div class="session-item"></div>
-                                                <div class="session-item">
-                                                    <h4>추가 적립금</h4>
-                                                    <p>추가 적립금으로 혜택으로 보다 저렴하게 에스테티크를 이용하실수 있습니다.</p>
-                                                </div>
+                                                <div class="session-item"><h4>회원가 적용</h4><p>모든 페이셜 및 바디 프로그램을 회원 특별가로 이용하실 수 있습니다.</p></div>
+                                                <div class="session-item"><h4>추가 적립금</h4><p>추가 적립금으로 혜택으로 보다 저렴하게 에스테티크를 이용하실수 있습니다.</p></div>
                                             </div>
                                             <button class="accordion-btn">가입 안내</button>
-                                            <div class="accordion-panel" style="padding: 20px 5px;">
-                                                <p class="section-paragraph" style="max-width: none;">멤버십 가입 및 자세한 혜택 안내는 각 지점으로 문의해주시면 친절하게 상담해드리겠습니다.</p>
-                                            </div>
+                                            <div class="accordion-panel" style="padding: 20px 5px;"><p class="section-paragraph" style="max-width: none;">멤버십 가입 및 자세한 혜택 안내는 각 지점으로 문의해주시면 친절하게 상담해드리겠습니다.</p></div>
                                         </div>
                                     </div>
                                 </div>
@@ -2553,17 +2461,28 @@
                     wrapper.addEventListener('click', function(event) {
                         const accordionBtn = event.target.closest('.accordion-btn');
                         if (!accordionBtn) return;
-
-                        const isActive = accordionBtn.classList.contains('active');
                         
-                        if (isActive) {
-                             accordionBtn.classList.remove('active');
-                             accordionBtn.nextElementSibling.style.maxHeight = null;
-                        } else {
+                        if (window.innerWidth <= 992) return;
+
+                        const programBlock = accordionBtn.closest('.program-block');
+                        const panel = accordionBtn.nextElementSibling;
+                        const wasActive = accordionBtn.classList.contains('active');
+                        
+                        wrapper.querySelectorAll('.accordion-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.nextElementSibling.style.maxHeight = null;
+                        });
+                        
+                        // 모든 program-block에서 is-expanded 클래스 제거
+                        wrapper.closest('.program-content-pane').querySelectorAll('.program-block').forEach(pb => {
+                             pb.classList.remove('is-expanded');
+                        });
+
+                        if (!wasActive) {
                             accordionBtn.classList.add('active');
-                            const panel = accordionBtn.nextElementSibling;
-                            if (panel) {
-                                panel.style.maxHeight = panel.scrollHeight + "px";
+                            panel.style.maxHeight = panel.scrollHeight + "px";
+                            if (programBlock) {
+                                programBlock.classList.add('is-expanded');
                             }
                         }
                     });
@@ -2595,11 +2514,7 @@
                     if (targetPage) {
                         targetPage.classList.add('active');
                         document.title = pageTitles[pageName];
-
-                        if (!isPopState && window.location.protocol !== 'file:') {
-                            // history.pushState({page: pageName}, pageTitles[pageName], url); 
-                        }
-
+                        
                         document.querySelectorAll('.nav-menu a, .mobile-nav-menu a').forEach(a => {
                             const linkPage = a.getAttribute('href').replace('.html', '');
                             a.classList.toggle('active', (pageName === 'home' && (linkPage === 'index' || linkPage === '')) || linkPage === pageName);
@@ -2641,6 +2556,15 @@
 
                 const activePage = mainContent.querySelector('.page-content-wrapper.active[data-page="programs"]');
                 if (!activePage) return;
+
+                activePage.querySelectorAll('.accordion-btn.active').forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.nextElementSibling.style.maxHeight = null;
+                });
+                activePage.querySelectorAll('.program-block.is-expanded').forEach(block => {
+                    block.classList.remove('is-expanded');
+                });
+
 
                 const tabContainer = activePage.querySelector('.program-tabs');
                 const targetId = tabBtn.dataset.target;
@@ -2745,7 +2669,7 @@
 
             if (fullscreenBtn && heroVideo) {
                 fullscreenBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // 버튼 클릭이 비디오 클릭으로 전파되지 않도록 함
+                    e.stopPropagation(); 
                     if (heroVideo.requestFullscreen) {
                         heroVideo.requestFullscreen();
                     } else if (heroVideo.webkitRequestFullscreen) { /* Safari */
